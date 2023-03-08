@@ -1,0 +1,72 @@
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
+
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+def libName = "player"
+def groupPackageName = "com.github.nwhhades"
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 19
+        targetSdk 32
+        versionCode 200
+        versionName "2.0"
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            zipAlignEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    android.libraryVariants.all { variant ->
+        // aar 输出文件名配置
+        variant.outputs.all { output ->
+            outputFileName = "${libName}-${android.defaultConfig.versionName}.aar"
+        }
+    }
+
+    publishing {
+        singleVariant("release")
+    }
+
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                //组包名
+                groupId = groupPackageName
+                //依赖库名称
+                artifactId = libName
+                //依赖库版本号
+                version = android.defaultConfig.versionName
+            }
+        }
+    }
+}
+
+dependencies {
+
+    api project(path: ':base')
+
+}

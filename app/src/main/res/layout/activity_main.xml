@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <View
+        android:layout_width="10pt"
+        android:layout_height="10pt"
+        android:layout_marginStart="1900pt"
+        android:background="@color/teal_200"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv"
+        style="?android:buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100pt"
+        android:layout_marginTop="200pt"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:text="Hello Word!"
+        android:background="@drawable/bg_btn_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.nwhhades.base.view.TvButton
+        android:id="@+id/tv2"
+        style="?android:buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="sssss"
+        android:background="@drawable/bg_btn_1"
+        app:layout_constraintStart_toEndOf="@id/tv"
+        app:layout_constraintTop_toTopOf="@id/tv" />
+
+    <TextView
+        android:id="@+id/tv3"
+        style="?android:buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:text="Hello Word!"
+        android:background="@drawable/bg_btn_1"
+        app:layout_constraintBottom_toTopOf="@id/tv2"
+        app:layout_constraintStart_toStartOf="@id/tv2" />
+
+    <TextView
+        android:id="@+id/tv4"
+        style="?android:buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:text="Hello Word!"
+        android:background="@drawable/bg_btn_1"
+        app:layout_constraintStart_toEndOf="@id/tv2"
+        app:layout_constraintTop_toTopOf="@id/tv2" />
+
+    <TextView
+        android:id="@+id/tv5"
+        style="?android:buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:nextFocusDown="@id/tp_progress"
+        android:text="He!"
+        android:background="@drawable/bg_btn_1"
+        app:layout_constraintStart_toStartOf="@id/tv2"
+        app:layout_constraintTop_toBottomOf="@id/tv2" />
+
+    <com.github.nwhhades.base.view.TvProgress
+        android:id="@+id/tp_progress"
+        android:layout_width="1000pt"
+        android:layout_height="200pt"
+        android:background="@color/black"
+        android:nextFocusDown="@id/tv"
+        android:nextFocusRight="@id/tv2"
+        android:nextFocusUp="@id/tv3"
+        android:nextFocusLeft="@id/tv4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

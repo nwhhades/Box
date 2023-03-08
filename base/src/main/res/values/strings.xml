@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="def_loading_view_show_msg">数据加载中,请耐心等待</string>
+    <string name="tv_progress">00:00/00:00</string>
+</resources>

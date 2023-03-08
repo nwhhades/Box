@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidStudioProjects/Box/app/src/main/res/layout/activity_main.xml" value="0.13854166666666667" />
+        <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/abc_seekbar_thumb_material.xml" value="0.171" />
+        <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/bg_btn_1.xml" value="0.1485" />
+        <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/bg_btn_1_focused.xml" value="0.1485" />
+        <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/bg_btn_1_pressed.xml" value="0.1485" />
+        <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/bg_gray_card.xml" value="0.165" />
+        <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/bg_tv_seek_progress_horizontal.xml" value="0.1475" />
+        <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/ic_tv_seek_thumb.xml" value="0.1475" />
+        <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/tv_seek_bar_progress_bar.xml" value="0.1485" />
+        <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/layout/layout_tv_progress_controller.xml" value="1.25" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

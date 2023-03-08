@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="iv_activity_bg" type="id" />
+    <item name="fl_loading" type="id" />
+    <item name="pb_loading" type="id" />
+</resources>
