@@ -1,5 +1,6 @@
 package com.github.nwhhades.player.simple;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -11,13 +12,16 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.github.nwhhades.base.view.TvSpinner;
 import com.github.nwhhades.player.R;
+import com.github.nwhhades.player.config.PlayerConfig;
 import com.github.nwhhades.player.inf.IControllerView;
 import com.github.nwhhades.player.inf.IMediaPlayer;
 import com.github.nwhhades.player.inf.IVideoView;
 
 public class TvVideoView extends FrameLayout implements LifecycleEventObserver, IVideoView, IMediaPlayer.OnPlayListener, IControllerView.OnViewActionListener {
 
+    protected volatile String mUrl;
     protected IMediaPlayer mMediaPlayer = null;
     protected IControllerView mControllerView = null;
     protected OnSimplePlayListener mOnSimplePlayListener = null;
@@ -44,6 +48,10 @@ public class TvVideoView extends FrameLayout implements LifecycleEventObserver, 
         if (mMediaPlayer != null) {
             mMediaPlayer.create_(this);
             mMediaPlayer.setOnPlayListener_(this);
+            //切换内核的时候自动继续播放
+            if (mUrl != null) {
+                play(mUrl, false);
+            }
         }
     }
 
@@ -84,17 +92,19 @@ public class TvVideoView extends FrameLayout implements LifecycleEventObserver, 
 
     @Override
     public void play(String url, boolean looping) {
+        mUrl = url;
         if (mMediaPlayer != null) {
             mMediaPlayer.setLooping_(looping);
-            mMediaPlayer.play_(url);
+            mMediaPlayer.play_(mUrl);
             mMediaPlayer.start_();
+            mMediaPlayer.startF5Progress();
         }
     }
 
     @Override
     public void create() {
         //这里可以读取配置的播放器
-        setMediaPlayer(new AndroidMediaPlayer(getContext()));
+        setMediaPlayer(PlayerConfig.getInstance().getPlayerFactory().getPlayer(getContext()));
         setControllerView(new TvControllerView(getContext()));
     }
 
@@ -183,6 +193,8 @@ public class TvVideoView extends FrameLayout implements LifecycleEventObserver, 
         }
     }
 
+    private TvSpinner configSpinner;
+
     @Override
     public void onViewClick(View view) {
         if (mMediaPlayer == null) {
@@ -199,6 +211,21 @@ public class TvVideoView extends FrameLayout implements LifecycleEventObserver, 
             mMediaPlayer.replay_();
         } else if (id == R.id.btn_3) {
             mMediaPlayer.setMute_(!mMediaPlayer.isMute_());
+        } else if (id == R.id.btn_4) {
+            if (configSpinner == null) {
+                Context context = getContext();
+                if (context instanceof Activity) {
+                    Activity activity = (Activity) context;
+                    configSpinner = new TvSpinner(activity, "选择播放内核", PlayerConfig.getInstance().getPlayerList(), PlayerConfig.getInstance().getCurIndex());
+                    configSpinner.setOnSelectItemListener((data, index) -> {
+                        PlayerConfig.getInstance().save(data);
+                        setMediaPlayer(PlayerConfig.getInstance().getPlayerFactory().getPlayer(context));
+                    });
+                } else {
+                    return;
+                }
+            }
+            configSpinner.show();
         }
     }
 

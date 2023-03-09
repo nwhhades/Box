@@ -14,6 +14,7 @@ import android.widget.VideoView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.github.nwhhades.player.inf.IMediaPlayer;
 
 public class AndroidMediaPlayer extends VideoView implements IMediaPlayer {
@@ -27,6 +28,7 @@ public class AndroidMediaPlayer extends VideoView implements IMediaPlayer {
     protected volatile ScaleType mScaleType = ScaleType.SCALE_DEFAULT;
     protected volatile PlayState mPlayState = PlayState.STATE_IDLE;
     protected OnPlayListener mOnPlayListener;
+    protected volatile boolean isF5Progress = false;
     protected final Handler handler = new Handler(Looper.myLooper());
     protected final Runnable f5ProgressRunnable = new Runnable() {
         @Override
@@ -80,6 +82,7 @@ public class AndroidMediaPlayer extends VideoView implements IMediaPlayer {
 
     @Override
     public void create_(@NonNull ViewGroup root) {
+        LogUtils.d("播放器绑定到VideoView");
         //添加到root
         root.addView(getView_(), 0, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         //初始化
@@ -186,6 +189,7 @@ public class AndroidMediaPlayer extends VideoView implements IMediaPlayer {
 
     @Override
     public void destroy_(@NonNull ViewGroup root) {
+        LogUtils.d("播放器解绑到VideoView");
         stopF5Progress();
         //移除监听器
         release_();
@@ -308,12 +312,17 @@ public class AndroidMediaPlayer extends VideoView implements IMediaPlayer {
     }
 
     @Override
-    public void startF5Progress() {
+    public synchronized void startF5Progress() {
+        if (isF5Progress) {
+            return;
+        }
+        isF5Progress = true;
         handler.post(f5ProgressRunnable);
     }
 
     @Override
-    public void stopF5Progress() {
+    public synchronized void stopF5Progress() {
+        isF5Progress = false;
         handler.removeCallbacks(f5ProgressRunnable);
     }
 
