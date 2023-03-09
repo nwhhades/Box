@@ -5,21 +5,20 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.github.nwhhades.base.R;
+import com.github.nwhhades.base.databinding.LayoutTvProgressControllerBinding;
 
 import java.util.Locale;
 
 public class TvProgress extends ConstraintLayout implements TvSeekBar.OnTvSeekBarListener, View.OnFocusChangeListener {
 
     private volatile long total_time;
-    private TvSeekBar tsb_progress;
-    private TextView tv_progress;
+    private LayoutTvProgressControllerBinding binding;
     private TvSeekBar.OnTvSeekBarListener onTvSeekBarListener;
 
     public TvProgress(@NonNull Context context) {
@@ -38,55 +37,41 @@ public class TvProgress extends ConstraintLayout implements TvSeekBar.OnTvSeekBa
     }
 
     private void init() {
+        binding = LayoutTvProgressControllerBinding.inflate(LayoutInflater.from(getContext()), this);
         setFocusable(true);
         setFocusableInTouchMode(true);
         setDescendantFocusability(FOCUS_BEFORE_DESCENDANTS);
         setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
-                if (tsb_progress != null) {
-                    tsb_progress.requestFocus();
-                }
+                binding.tsbProgress.requestFocus();
             }
         });
-        View root = LayoutInflater.from(getContext()).inflate(R.layout.layout_tv_progress_controller, this, true);
-        if (root != null) {
-            View v_top_focus = root.findViewById(R.id.v_top_focus);
-            View v_bottom_focus = root.findViewById(R.id.v_bottom_focus);
-            View v_left_focus = root.findViewById(R.id.v_left_focus);
-            View v_right_focus = root.findViewById(R.id.v_right_focus);
-            tsb_progress = root.findViewById(R.id.tsb_progress);
-            tv_progress = root.findViewById(R.id.tv_progress);
-            //添加监听器
-            v_top_focus.setOnFocusChangeListener(this);
-            v_bottom_focus.setOnFocusChangeListener(this);
-            v_left_focus.setOnFocusChangeListener(this);
-            v_right_focus.setOnFocusChangeListener(this);
-            tsb_progress.setOnTvSeekBarListener(this);
-        }
+        binding.vTopFocus.setOnFocusChangeListener(this);
+        binding.vBottomFocus.setOnFocusChangeListener(this);
+        binding.vLeftFocus.setOnFocusChangeListener(this);
+        binding.vRightFocus.setOnFocusChangeListener(this);
+        binding.tsbProgress.setOnTvSeekBarListener(this);
     }
 
     private boolean isStartPre = false;
 
     @Override
     public void onProgressChanged(TvSeekBar tvSeekBar, int progress, boolean fromUser) {
-        if (total_time != 0 && tv_progress != null && fromUser) {
+        if (total_time != 0 && fromUser) {
             float local_cur_time = progress / 100f * total_time;
             String text = stringForTime((long) local_cur_time) + " / " + stringForTime(total_time);
-            tv_progress.setText(text);
+            binding.tvProgress.setText(text);
         }
         if (onTvSeekBarListener != null) {
-            onTvSeekBarListener.onProgressChanged(tsb_progress, progress, fromUser);
+            onTvSeekBarListener.onProgressChanged(binding.tsbProgress, progress, fromUser);
         }
     }
 
     @Override
     public void onStartPreview(TvSeekBar tvSeekBar, int progress) {
-        if (isStartPre) {
-            return;
-        }
         isStartPre = true;
         if (onTvSeekBarListener != null) {
-            onTvSeekBarListener.onStartPreview(tsb_progress, progress);
+            onTvSeekBarListener.onStartPreview(binding.tsbProgress, progress);
         }
     }
 
@@ -97,7 +82,14 @@ public class TvProgress extends ConstraintLayout implements TvSeekBar.OnTvSeekBa
         }
         isStartPre = false;
         if (onTvSeekBarListener != null) {
-            onTvSeekBarListener.onStopPreview(tsb_progress, progress);
+            onTvSeekBarListener.onStopPreview(binding.tsbProgress, progress);
+        }
+    }
+
+    @Override
+    public void onBack() {
+        if (onTvSeekBarListener != null) {
+            onTvSeekBarListener.onBack();
         }
     }
 
@@ -105,7 +97,7 @@ public class TvProgress extends ConstraintLayout implements TvSeekBar.OnTvSeekBa
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
             if (isStartPre) {
-                onStopPreview(tsb_progress, tsb_progress.getProgress());
+                onStopPreview(binding.tsbProgress, binding.tsbProgress.getProgress());
             }
             actionFocus(v.getId());
         }
@@ -137,12 +129,16 @@ public class TvProgress extends ConstraintLayout implements TvSeekBar.OnTvSeekBa
         if (time1 < 0 || time2 <= 0) {
             return;
         }
-        if (tsb_progress != null && tv_progress != null && !isStartPre) {
+        if (!isStartPre) {
             float progress = time1 * 100f / time2;
-            tsb_progress.setProgress((int) progress);
+            binding.tsbProgress.setProgress((int) progress);
             String text = stringForTime(time1) + " / " + stringForTime(time2);
-            tv_progress.setText(text);
+            binding.tvProgress.setText(text);
         }
+    }
+
+    public void setProgress(int progress) {
+        binding.tsbProgress.setProgress(progress);
     }
 
     public void setOnTvSeekBarListener(TvSeekBar.OnTvSeekBarListener onTvSeekBarListener) {

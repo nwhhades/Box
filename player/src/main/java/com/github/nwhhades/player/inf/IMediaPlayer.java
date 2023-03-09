@@ -32,13 +32,17 @@ public interface IMediaPlayer {
 
     interface OnPlayListener {
 
+        void onPlayErr(Exception e);
+
+        void onPlayCompleted();
+
         void onPlayState(PlayState state);
 
         void onProgress(int progress, long cur_time, long total_time);
 
     }
 
-    View getView();
+    View getView_();
 
     /**
      * 创建播放器
@@ -195,6 +199,13 @@ public interface IMediaPlayer {
     PlayState getPlaySate_();
 
     /**
+     * 设置异常状态
+     *
+     * @param e 异常
+     */
+    void setErrState(Exception e);
+
+    /**
      * 设置播放监听器
      *
      * @param onPlayListener 监听器
@@ -205,5 +216,9 @@ public interface IMediaPlayer {
      * 获取播放监听器
      */
     OnPlayListener getOnPlayListener_();
+
+    void startF5Progress();
+
+    void stopF5Progress();
 
 }
