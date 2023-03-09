@@ -27,7 +27,7 @@ import com.hjq.toast.Toaster;
 
 public abstract class BaseActivity<V extends ViewBinding> extends AppCompatActivity {
 
-    protected static final String TAG = "BaseActivity";
+    private static final String TAG = "BaseActivity";
 
     protected static final String SP_KEY_ACTIVITY_BG = "SP_KEY_ACTIVITY_BG";
 

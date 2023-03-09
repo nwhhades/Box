@@ -31,9 +31,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 
     android.libraryVariants.all { variant ->
@@ -45,6 +50,15 @@ android {
 
     publishing {
         singleVariant("release")
+    }
+
+    //配置这个并不是让你隐藏过时api，而是让过时api或者不合规矩的语法展现出来
+    allprojects {
+        gradle.projectsEvaluated {
+            tasks.withType(JavaCompile) {
+                options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+            }
+        }
     }
 
 }

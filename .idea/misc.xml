@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/Box/app/src/main/res/layout/activity_main.xml" value="0.13854166666666667" />
+        <entry key="..\:/AndroidStudioProjects/Box/app/src/main/res/layout/simple_list_item_1.xml" value="0.20943562610229277" />
         <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/abc_seekbar_thumb_material.xml" value="0.171" />
         <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/bg_btn_1.xml" value="0.1485" />
         <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/bg_btn_1_focused.xml" value="0.1485" />
@@ -12,7 +13,12 @@
         <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/bg_tv_seek_progress_horizontal.xml" value="0.1475" />
         <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/ic_tv_seek_thumb.xml" value="0.1475" />
         <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/drawable/tv_seek_bar_progress_bar.xml" value="0.1485" />
+        <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/layout/layout_list_simple_item.xml" value="0.20943562610229277" />
         <entry key="..\:/AndroidStudioProjects/Box/base/src/main/res/layout/layout_tv_progress_controller.xml" value="1.25" />
+        <entry key="..\:/AndroidStudioProjects/Box/player/src/main/res/drawable/bg_player_controller_bottom.xml" value="0.1685" />
+        <entry key="..\:/AndroidStudioProjects/Box/player/src/main/res/drawable/ic_f5.xml" value="0.1685" />
+        <entry key="..\:/AndroidStudioProjects/Box/player/src/main/res/drawable/ic_voice.xml" value="0.2025" />
+        <entry key="..\:/AndroidStudioProjects/Box/player/src/main/res/layout/layout_tv_video_controller.xml" value="0.1455026455026455" />
       </map>
     </option>
   </component>

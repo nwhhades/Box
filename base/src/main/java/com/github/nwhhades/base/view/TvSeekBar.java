@@ -19,6 +19,8 @@ public class TvSeekBar extends AppCompatSeekBar implements SeekBar.OnSeekBarChan
 
         void onStopPreview(TvSeekBar tvSeekBar, int progress);
 
+        void onBack();
+
     }
 
     private OnTvSeekBarListener onTvSeekBarListener;
@@ -69,6 +71,10 @@ public class TvSeekBar extends AppCompatSeekBar implements SeekBar.OnSeekBarChan
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && onTvSeekBarListener != null) {
+            onTvSeekBarListener.onBack();
+            return true;
+        }
         if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT | keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
             onStartTrackingTouch(this);
         }
